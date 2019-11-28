@@ -13,8 +13,8 @@ PURCHASE_HISTORY = 'purchase_history.data'
 USER_ACCOUNT = 'user_account.data'
 
 
-# purchase_history = []
-# orders = []
+purchase_items = []
+purchase_history = {}
 
 if os.path.exists(PURCHASE_HISTORY):
     with open(PURCHASE_HISTORY, 'rb') as fp:
@@ -33,41 +33,54 @@ while True:
     print('1. пополнение счета')
     print('2. покупка')
     print('3. история покупок')
-    print('4. выход')
-
+    print('4. проверка баланса')
+    print('5. выход')
+    print('\n')
     choice = input('Выберите пункт меню: ')
     print('\n')
 
+# ------------- 1. Пополнение счета ------------
     if choice == '1':
         account_topup = int(input('Введите сумму пополнения: '))
         user_account = user_account + account_topup
 
+# ------------ 2. Покупка ----------------------
+    elif choice == '2':
+        sum_purchase = int(input('Введите сумму покупки: '))
+        if sum_purchase > user_account:
+            print('Недостаточно средств')
+        else:
+            item = input('Введите название покупки: ')
+            purchase_items.append(item)
+            user_account = user_account - sum_purchase
+            purchase_history[item] = sum_purchase
 
-#    elif choice == '2':
-#        sum_purchase = int(input('Введите сумму покупки: '))
-#        if sum_purchase > user_account:
-#            print('Недостаточно средств')
-#        else:
-#            stuff = input('Введите название покупки: ')
-#            purchases.append(stuff)
-#            user_account = user_account - sum_purchase
-#            history[stuff] = sum_purchase
-
-
+# ----------- 3. История покупок ---------------
 
     elif choice == '3':
+        print('History of purchases: ')
+        if len(purchase_history) == 0:
+          print('No purchase history available')
+        else:
+          for k, v in purchase_history.items():
+            print(k, v)
 
-        print('Funds left: ', user_account)
-
-#        print('History of purchases: ')
-#        for k, v in purchase_history.items():
-#            print(k, v)
-
+# ----------- 4. Проверка баланса --------------            
 
     elif choice == '4':
+      print('Account balance: ', user_account)        
+
+# ----------------- 5. ВЫХОД --------------------
+    elif choice == '5':
       with open(USER_ACCOUNT, 'wb') as fa:
         pickle.dump(user_account, fa)
-        break
+      
+      with open(PURCHASE_HISTORY, 'wb') as fp:
+        pickle.dump(purchase_history, fp)
+
+      break
 
     else:
         print('Неверный пункт меню')
+
+print('End of Program')
