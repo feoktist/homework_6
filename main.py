@@ -47,6 +47,7 @@ while True:
 # ------------ 2. Покупка ----------------------
     elif choice == '2':
         sum_purchase = int(input('Введите сумму покупки: '))
+        
         if sum_purchase > user_account:
             print('Недостаточно средств')
         else:
