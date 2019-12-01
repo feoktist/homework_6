@@ -1,3 +1,8 @@
+import os
+import sys
+
+# http://senkler.blogspot.com/2011/04/python.html
+
 curDir = os.getcwd()
 print(curDir)
 
@@ -14,7 +19,8 @@ while True:
     print('9. Играть в викторину')
     print('10. Мой банковский счет')
     print('11. Смена рабочей директории')
-    print('12. Выход ')
+    print('12. Сохранение содержимого рабочей директории в файл ')
+    print('13. Выход')
 
     choice = input('Выберите пункт меню: ')
     print('\n')
@@ -48,7 +54,7 @@ while True:
             new_folder_copy = shutil.copy('new_folder')
         print(new_folder_path)
 
-    # ----------- 4. Просмотр содержимого в рабочей директории ---------------
+    # ----------- 4. Просмотр содержимого в рабочей директории ------------
 
     # https://www.geeksforgeeks.org/python-shutil-copyfile-method/
 
@@ -81,8 +87,21 @@ while True:
     # -------------- 11. Смена рабочей директории --------------
     elif choice == '11':
         ch_path = r'Macintosh HD\Users\feoktist\PycharmProjects\homework_4'
-        os.chdir(ch_path)
-    # -------------- 12. Выход --------------------------------
+        curDir = os.chdir(ch_path)
+
+
+    # -------------- 12. Сохранение содержимого в рабочей директории ----
+    elif choice == '12':
+      files = os.listdir(curDir)
+      with open('listdir.txt', 'w') as f:
+        f.write('dirs: ')
+        f.write(curDir)
+        f.write('\n')
+        f.write('files: ')
+        f.write(str(files))
+
+
+    # -------------- 13. Выход --------------------------------
     else:
         print('See ya!')
         break
