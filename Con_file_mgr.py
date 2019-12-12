@@ -1,7 +1,18 @@
+'''
+0. В проекте ""Консольный файловый менеджер"" перейти на новую ветку для добавления нового функционала;
+
+1. Где это возможно переписать код с использованием генераторов и тернарных операторов;
+
+2. Там где возможны исключительные ситуации добавить обработку исключений;
+
+3. *Где это возможно применить декораторы.
+'''
+
 import os
 import sys
+import shutil
 
-# http://senkler.blogspot.com/2011/04/python.html
+
 
 curDir = os.getcwd()
 print(curDir)
@@ -27,32 +38,30 @@ while True:
 
     if choice == '1':
         print('Creating a folder..')
+        os.mkdir('new_folder') if not os.path.exists('new_folder') else print('A new folder exists')
 
-        new_path = r'Macintosh HD\Users\feoktist\PycharmProjects\homework_5\new_folder'
-        if not os.path.exists('new_folder'):
-            os.mkdir('new_folder')
-        print('Done!')
+    #     new_path = r'Macintosh HD\Users\feoktist\PycharmProjects\homework_5\new_folder'
+    #    if not os.path.exists('new_folder'):
+    #         os.mkdir('new_folder')
+    #     print('Done!')
 
     # ----- 2. удалить файл или папку ----------------------------
 
     elif choice == '2':
         print('Removing a folder...')
-        if os.path.exists('new_folder'):
-            os.rmdir('new_folder')
-            print('Done!')
-        else:
-            print('No such folder exists')
+        os.rmdir('new_folder') if os.path.exists('new_folder') else print('no such folder exists')
+
 
 
 
     # -------- 3. Копировать файл/папку --------------------
 
     elif choice == '3':
-
         print('Copying a file or folder')
-        if os.path.exists('new_folder'):
-            new_folder_copy = shutil.copy('new_folder')
-        print(new_folder_path)
+        new_folder_copy = shutil.copy('new_folder') if os.path.exists('new_folder') else print(
+            'no such folder or path exists')
+
+
 
     # ----------- 4. Просмотр содержимого в рабочей директории ------------
 
@@ -92,13 +101,13 @@ while True:
 
     # -------------- 12. Сохранение содержимого в рабочей директории ----
     elif choice == '12':
-      files = os.listdir(curDir)
-      with open('listdir.txt', 'w') as f:
-        f.write('dirs: ')
-        f.write(curDir)
-        f.write('\n')
-        f.write('files: ')
-        f.write(str(files))
+        files = os.listdir(curDir)
+        with open('listdir.txt', 'w') as f:
+            f.write('dirs: ')
+            f.write(curDir)
+            f.write('\n')
+            f.write('files: ')
+            f.write(str(files))
 
 
     # -------------- 13. Выход --------------------------------
